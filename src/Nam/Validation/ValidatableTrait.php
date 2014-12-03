@@ -51,7 +51,15 @@ trait ValidatableTrait
      *
      * @return array
      */
-    public function rules()
+    public static function rules()
+    {
+        return [ ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function messages()
     {
         return [ ];
     }
@@ -68,12 +76,13 @@ trait ValidatableTrait
     public function validate($data, array $rules = [ ], array $messages = [ ])
     {
         $data = $this->normalize($data);
-        $rules = array_merge($this->rules(), $rules);
+        $rules = array_merge(static::rules(), $rules);
+        $messages = array_merge(static::messages(), $messages);
 
-        $this->validation = $this->validator->make($data, $rules, $messages);
+        $this->validation = $this->getValidator()->make($data, $rules, $messages);
 
         if ($this->validation->fails()) {
-            throw new ValidationException('Validation Fails.');
+            throw new ValidationException('Validation Fails.', $this->validation->errors());
         }
 
         return true;
