@@ -1,11 +1,9 @@
 <?php
 
-
 namespace Nam\Validation;
 
 use Illuminate\Validation\Factory;
 use Illuminate\Validation\Validator;
-
 
 /**
  * Trait ValidatableTrait
